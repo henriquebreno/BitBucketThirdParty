@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Popup de Login</title>
+    <!-- Inclua o jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Estilos para o botão de login */
+        .login-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Popup Login</h1>
+    <!-- Botão para abrir o popup de login -->
+    <a href="#" id="loginButton" class="login-button">Login</a>
+
+    <!-- Script JavaScript para lidar com o popup -->
+    <script>
+        // Função para abrir o popup de login
+        $('#loginButton').click(function (e) {
+            e.preventDefault(); // Impede o comportamento padrão do link
+
+            // Dimensões do popup
+            var width = 600;
+            var height = 400;
+
+            // Calcula a posição central do popup na tela
+            var left = (screen.width / 2) - (width / 2);
+            var top = (screen.height / 2) - (height / 2);
+
+            // URL para a ação de login no controlador Account
+            var url = '@Url.Action("Authorize", "Account")'; // Supondo que você está usando ASP.NET MVC
+
+            // Abre o popup de login
+            var loginWindow = window.open(url, 'Login', 'width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
+
+            // Aguarda o popup ser fechado e verifica se o usuário está autenticado
+            var checkLoginInterval = setInterval(function () {
+                if (loginWindow.closed) {
+                    clearInterval(checkLoginInterval); // Para de verificar após fechar o popup
+                    // Redireciona para atualizar a página se o usuário estiver autenticado
+                    if (isUserAuthenticated()) {
+                        window.location.reload();
+                    }
+                }
+            }, 1000); // Verifica a cada segundo
+
+            // Verifica se o usuário está autenticado
+            function isUserAuthenticated() {
+                // Você precisa implementar essa função de acordo com a lógica do seu aplicativo
+                // Por exemplo, pode verificar se o usuário está logado ou fazer uma chamada AJAX para verificar a autenticação do servidor
+                return false; // Retornar true se o usuário estiver autenticado, caso contrário, false
+            }
+        });
+    </script>
+</body>
+</html>

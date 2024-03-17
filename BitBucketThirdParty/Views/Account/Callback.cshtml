@@ -1,0 +1,23 @@
+﻿@model IEnumerable<string>
+
+<h1>Callback</h1>
+
+@if (Model != null && Model.Any())
+{
+    @* <form asp-action="GrantPermissions" method="post"> *@
+        <h2>Repositórios do Usuário</h2>
+        @foreach (var repository in Model)
+        {
+            <label>
+                <input type="checkbox" name="repositories" value="@repository" /> @repository
+            </label>
+
+            <br />
+        }
+        <button type="submit">Set Permissions</button>
+   @*  </form> *@
+}
+else
+{
+    <p>Nenhum repositório encontrado.</p>
+}
